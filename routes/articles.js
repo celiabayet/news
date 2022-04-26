@@ -29,13 +29,12 @@ router.post('/wishlist', async function(req,res,next){
     article = await newArticle.save()
   }
 
-  let user = await userModel.findOne(
-    { token: req.body.token}
-    );
-  
-  user.wishlist.push(article)
-
-  user = await user.save()
+  console.log(article)
+  let user = await userModel.updateOne(
+    { token: req.body.token}, //the doc to update
+    { wishlist: [article.id] } // keys to update
+      );
+  console.log(user)
 
   res.json({user})
 })
